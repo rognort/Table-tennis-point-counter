@@ -1,0 +1,299 @@
+<style>@import url('https://fonts.cdnfonts.com/css/ds-digital'); body { background-color: rgb(100, 100, 100); padding: 50px; text-align: center; } h1 {font-family: 'DS-Digital', sans-serif; margin-bottom: 30px; } .table-container { margin-top: 50px; width: 100%; max-width: 500pt; margin-left: auto; margin-right: auto; } #thetable { user-select: none; /* Prevents users from selecting text */ font-family: 'DS-Digital', sans-serif; border-collapse: separate; /* Use separate to allow independent border spacing */ width: 100%; /* Table width set to 100% of its container */ border-spacing: 0; /* Eliminates space between borders */ border: 10px solid black; /* Thick outer border */ } #thetable td, #thetable th { border: 1px solid rgb(100, 100, 100); /* Thinner borders for cells */ } /* Specific adjustments for only the outer edges if necessary */ #thetable tr:first-child th { border-top: 1px solid rgb(100, 100, 100); } #thetable tr:last-child td { border-bottom: 1px solid rgb(100, 100, 100); } #thetable tr th:first-child, #thetable tr td:first-child { border-left: 2px solid rgb(100, 100, 100); } #thetable tr th:last-child, #thetable tr td:last-child { border-right: 2px solid rgb(100, 100, 100); } table { user-select: none; /* Zabraňuje uživatelům vybírat text */ font-family: 'DS-Digital', sans-serif; border-collapse: collapse; /* Merge cell borders */ width: 100%; /* Table width set to 100% of its container */ } td { text-align: center; vertical-align: middle; height: 130px; /* Adjust the height as needed */ border: 2px solid rgb(100, 100, 100); /* Add border to cells */ } th { color: gold; background-color: black; border: 2px solid rgb(100, 100, 100); /* Add border to cells */ } .points { font-size: 200px; text-align: center; padding-right: 0pt; color: gold; background-color: darkslategrey; width: 30%; /* Adjust the width as needed */ /*height: 150pt;*/ } .sets { font-size: 100px; padding-top: 0pt; color: gold; background-color: darkslategrey; vertical-align: middle; /*border-bottom: transparent;*/ width: 15%; /* Adjust the width as needed */ /* height: 50pt;*/ } .serving { font-size: 70px; padding-top: 10pt; color: gold; background-color: darkslategrey; vertical-align:middle; /*border-top: transparent;*/ width: 17%; /* Adjust the width as needed */ /* height: 50pt;*/ } .rcard { font-size: 70px; color: red; background-color: darkslategrey; vertical-align:middle; /*border-top: transparent;*/ width: 17%; /* Adjust the width as needed */ /* height: 50pt;*/ } .ycard { font-size: 70px; color: yellow; background-color: darkslategrey; vertical-align:middle; /*border-top: transparent;*/ width: 17%; /* Adjust the width as needed */ /* height: 50pt;*/ } .results { font-size: 30px; color: gold; background-color: darkslategrey; vertical-align:top; } .results ul{ list-style-type: none; text-align: center; margin-left: -25pt; padding-top: 10px; column-count: 1; /* Default to one column */ column-gap: 20px; /* Space between columns */ padding: 0; /* Removes padding */ margin: 0; /* Adjusts margin */ } .results ul.four-or-more { column-count: 2; /* Two columns when more than three items are present */ } .rcard:hover, .ycard:hover, .points:hover, .sets:hover{ cursor: pointer; background-color: hsla(180, 25%, 25%, 0.5); } .end:hover,.timeout:hover { cursor: pointer; background-image: linear-gradient(to bottom, hsla(180, 25%, 25%, 0.2) 50%, rgb(100, 100, 100)); } .result { font-size: 100px; padding-top: 0pt; color: gold; background-color: darkslategrey; vertical-align: middle; } .timeout { font-size: 30pt; padding-top: 10pt; vertical-align: top; color: black; /*background-color: darkslategrey;*/ /*border-bottom: transparent;*/ width: 15%; /* Adjust the width as needed */ /* height: 50pt;*/ } .end { font-size: 50px; padding-top: 0pt; color: black; /*background-color: darkslategrey;*/ vertical-align: middle; /*border-bottom: transparent;*/ width: 15%; /* Adjust the width as needed */ /* height: 50pt;*/ } </style>
+                <tr>
+                    <td class="sets" id="player1-sets">0</td>
+                    <td rowspan="2"  colspan="2" class="points" id="player1-points">0</td>
+                    <td rowspan="2" colspan="2" class="points" id="player2-points">0</td>
+                    <td class="sets" id="player2-sets">0</td>
+                </tr>
+                <tr>
+                    <td class="serving" id="player1-serving">◉</td>
+                    <td class="serving" id="player2-serving"> </td>
+                </tr>
+
+                <tr>
+                    <td class="ycard" id="player1-ycard"></td>
+                    <td class="rcard" id="player1-rcard"></td>
+                    <td class="result" colspan="2" style="font-size: 50pt;" id="result">0-0</td>
+                    <td class="rcard" id="player2-rcard"></td>
+                    <td class="ycard" id="player2-ycard"></td>
+                </tr>
+                <tr>
+                    <th>z-karta</th>
+                    <th>c-karta</th>
+                    <th colspan="2"> </th>
+                    <th>c-karta</th>
+                    <th>z-karta</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<div class="table-container" style="margin-top: 0px;">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td id="p1-timeout-btn" class="timeout">Timeout</td>
+                <td id="end-match" class="end"></td>
+                <td id="p2-timeout-btn" class="timeout">Timeout</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="match-results"
+style="columns: 1;">
+    <ul id="results-list"> </ul>
+</div>
+
+<!--
+<p>před prvním bodem můžeš klikem na míč určit, kdo má podání</p>
+<p>krom bodů se vše ovládá dvojklimem</p>
+<p>pokud se spleteš s červenou kartou, můžeš ji během gamu vrátit, v dalším už ne</p>
+<p>sety musíš potvrdit klikem na skore u vyhrávajícího hráče</p>
+<p>dokud nepotvrdíš, můžeš pomocí ctrl+klik odečíst body v případě překliku</p>
+-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var player1serving = document.getElementById('player1-serving');
+        var player2serving = document.getElementById('player2-serving');
+        let serv_list = ['◉', ''];
+        let another_list = ['', '◉'];
+        var max_sets = 4;
+        var player1Points = document.getElementById('player1-points');
+        var player1Sets = document.getElementById('player1-sets');
+        var player2Points = document.getElementById('player2-points');
+        var player2Sets = document.getElementById('player2-sets');
+        var player1TimeoutBtn = document.getElementById('p1-timeout-btn');
+        var player2TimeoutBtn = document.getElementById('p2-timeout-btn');
+        var player1TimeoutUsed = false;
+        var player2TimeoutUsed = false;
+
+        function updatePointsPlayer1(e) {
+            updatePoints(player1Points, e);
+            updateServingIndicator();
+        }
+
+        function updatePointsPlayer2(e) {
+            updatePoints(player2Points, e);
+            updateServingIndicator();
+        }
+
+        function updatePoints(pointsCell, e) {
+            var points = parseInt(pointsCell.textContent);
+            if (e.ctrlKey && points > 0) {
+                points--; // Allow subtraction regardless of conditions
+            } else if (!e.ctrlKey && !shouldBlockPoints()) {
+                points++; // Only allow addition if points blocking conditions are not met
+            }
+            pointsCell.textContent = points;
+        }
+
+        function shouldBlockPoints() {
+            var player1points = parseInt(player1Points.textContent);
+            var player2points = parseInt(player2Points.textContent);
+            var player1sets = parseInt(player1Sets.textContent);
+            var player2sets = parseInt(player2Sets.textContent);
+
+            if ((player1points >= 11 && player1points > player2points + 1) ||
+                (player2points >= 11 && player2points > player1points + 1)) {
+                return true;
+            }
+
+            if (player1sets >= max_sets || player2sets >= max_sets) {
+                return true;
+            }
+
+            return false;
+        }
+
+        function updateServingIndicator(){
+            let totalPoints = parseInt(player1Points.textContent) + parseInt(player2Points.textContent) - redCardCount;
+            if (parseInt(player1Points.textContent) >= 10 && parseInt(player2Points.textContent) >= 10) {
+                player1serving.textContent = (totalPoints % 2 === 0) ? serv_list[0] : serv_list[1];
+                player2serving.textContent = (totalPoints % 2 === 1) ? serv_list[0] : serv_list[1];
+            } else {
+                player1serving.textContent = (totalPoints % 4 < 2) ? serv_list[0] : serv_list[1];
+                player2serving.textContent = (totalPoints % 4 >= 2) ? serv_list[0] : serv_list[1];
+            }
+        }
+
+        var endmatch = document.getElementById('end-match');
+        var player1GameWins = 0;
+        var player2GameWins = 0;
+        var resultsList = document.getElementById('results-list');
+        var result = document.getElementById('result');
+        
+        function confirmSet(playerSets, playerPoints, opponentPoints) {
+            var playerPointsNumber = parseInt(playerPoints.textContent);
+            var opponentPointsNumber = parseInt(opponentPoints.textContent);
+            if (playerPointsNumber >= 11 && playerPointsNumber > opponentPointsNumber + 1) {
+                if (parseInt(playerSets.textContent) < max_sets) {
+                    playerSets.textContent = parseInt(playerSets.textContent) + 1;
+                    playerPoints.textContent = '0';
+                    opponentPoints.textContent = '0';
+                    updateServingIndicator(); // Reset serving indicators
+                }
+            }
+            if (parseInt(playerSets.textContent) === max_sets)
+            {endmatch.textContent = '►';
+            var resultItem = document.createElement('li');
+            var p1Sets = parseInt(player1Sets.textContent);
+            var p2Sets = parseInt(player2Sets.textContent);
+            if (p1Sets > p2Sets) {
+                player1GameWins++;
+                result.textContent = `${player1GameWins}-${player2GameWins}`;
+                resultItem.textContent = `${p1Sets}-${p2Sets}`;
+            } else {
+                player2GameWins++;
+                result.textContent = `${player1GameWins}-${player2GameWins}`;
+                resultItem.textContent = `${p2Sets}-${p1Sets}`;
+            }}
+        }
+
+        player1Points.addEventListener('mousedown', updatePointsPlayer1);
+        player2Points.addEventListener('mousedown', updatePointsPlayer2);
+        player1Sets.addEventListener('dblclick', function() {
+            [serv_list, another_list] = [another_list, serv_list];
+            confirmSet(player1Sets, player1Points, player2Points);
+        });
+        player2Sets.addEventListener('dblclick', function() {
+            [serv_list, another_list] = [another_list, serv_list];
+            confirmSet(player2Sets, player2Points, player1Points);
+        });
+        
+
+        var player1YCard = document.getElementById('player1-ycard');
+        var player1RCard = document.getElementById('player1-rcard');
+        var player2YCard = document.getElementById('player2-ycard');
+        var player2RCard = document.getElementById('player2-rcard');
+        var redCardCount = 0;
+
+        player1RCard.addEventListener('dblclick', function() {
+            if (player1RCard.textContent === '█') {
+                // Allow removing the card only if it's the same set
+                if (player1RCard.getAttribute('data-set1') === player1Sets.textContent + player2Sets.textContent) {
+                    player1RCard.textContent = '';
+                    player2Points.textContent = parseInt(player2Points.textContent) - 1;
+                    player1RCard.removeAttribute('data-set1');
+                }
+            } else if (player1YCard.textContent === '█') {
+                player1RCard.textContent = '█';
+                player2Points.textContent = parseInt(player2Points.textContent) + 1;
+                player1RCard.setAttribute('data-set1', player1Sets.textContent + player2Sets.textContent);
+            }
+        });
+
+        player2RCard.addEventListener('dblclick', function() {
+            if (player2RCard.textContent === '█') {
+                // Allow removing the card only if it's the same set
+                if (player2RCard.getAttribute('data-set2') === player1Sets.textContent + player2Sets.textContent) {
+                    player2RCard.textContent = '';
+                    player1Points.textContent = parseInt(player1Points.textContent) - 1;
+                    player2RCard.removeAttribute('data-set2');
+                }
+            } else if (player2YCard.textContent === '█') {
+                player2RCard.textContent = '█';
+                player1Points.textContent = parseInt(player1Points.textContent) + 1;
+                player2RCard.setAttribute('data-set2', player1Sets.textContent + player2Sets.textContent);
+            }
+        });
+
+        function toggleYellowCard(card) {
+            card.textContent = card.textContent === '█' ? '' : '█';
+        }
+
+        player1YCard.addEventListener('dblclick', function() {
+            if (player1RCard.textContent === '')
+            {toggleYellowCard(player1YCard);}
+        });
+
+        player2YCard.addEventListener('dblclick', function() {
+            if (player2RCard.textContent === '')
+            {toggleYellowCard(player2YCard);}
+        });
+
+
+        document.getElementById('end-match').addEventListener('click', function() {
+            var p1Sets = parseInt(player1Sets.textContent);
+            var p2Sets = parseInt(player2Sets.textContent);
+
+            if (p1Sets >= max_sets || p2Sets >= max_sets) {
+                player1Points.textContent = '0';
+                player2Points.textContent = '0';
+                player1Sets.textContent = '0';
+                player2Sets.textContent = '0';
+                player1TimeoutUsed = false;
+                player2TimeoutUsed = false;
+                player1TimeoutBtn.textContent = 'Timeout';
+                player1TimeoutBtn.style.color = 'black';
+                player2TimeoutBtn.textContent = 'Timeout';
+                player2TimeoutBtn.style.color = 'black';
+                
+                endmatch.textContent = ''
+
+                player1RCard.textContent = ''
+                player2RCard.textContent = ''
+                player1YCard.textContent = ''
+                player2YCard.textContent = ''
+                redCardCount = 0; // Reset red card count
+            }
+        });
+
+        var player1TimeoutBtn = document.getElementById('p1-timeout-btn');
+        var player2TimeoutBtn = document.getElementById('p2-timeout-btn');
+
+        player1TimeoutBtn.addEventListener('dblclick', function() {
+            if (!player1TimeoutUsed) {
+                player1TimeoutUsed = true;
+                startTimeout(player1TimeoutBtn);
+            }
+        });
+
+        player2TimeoutBtn.addEventListener('dblclick', function() {
+            if (!player2TimeoutUsed) {
+                player2TimeoutUsed = true;
+                startTimeout(player2TimeoutBtn);
+            }
+        });
+
+        function startTimeout(button) {
+            if (confirm("Opravdu si chce hráč vzít timeout?")){
+            var timeLeft = 60;
+            button.textContent = timeLeft;
+            button.style.fontSize = '100pt';
+            button.style.paddingTop = '0pt';
+            var timer = setInterval(function() {
+                timeLeft--;
+                button.textContent = timeLeft > 0 ? timeLeft : 'Timeout';
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    button.textContent = 'Timeout';
+                    button.style.fontSize = '30pt';
+                    button.style.paddingTop = '10pt';
+                    button.style.color = 'gray';
+                }
+            }, 1000);
+        }}
+
+        // 'los' podání (change of serve) only when scores and sets are at zero
+        player1serving.addEventListener('mousedown', function(e) {
+            if (e.target === player1serving && isGameReset()) {
+                [serv_list, another_list] = [another_list, serv_list];
+                updateServingIndicator(); // Explicitní aktualizace indikátoru podání
+            }
+        });
+
+        player2serving.addEventListener('mousedown', function(e) {
+            if (e.target === player2serving && isGameReset()) {
+                [serv_list, another_list] = [another_list, serv_list];
+                updateServingIndicator(); // Explicitní aktualizace indikátoru podání
+            }
+        });
+
+        function isGameReset() {
+            return player1Points.textContent === '0' && player2Points.textContent === '0' &&
+                player1Sets.textContent === '0' && player2Sets.textContent === '0';
+        }
+    });
+</script>
